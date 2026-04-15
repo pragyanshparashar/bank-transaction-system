@@ -1,4 +1,5 @@
 const userModel = require("../models/userModel")
+const sendEmail = require("../utils/sendEmail");
 const jwt = require("jsonwebtoken")
 
 const RegisterController = async (req, res) => {
@@ -25,6 +26,12 @@ const RegisterController = async (req, res) => {
 
     const newUser = await userModel.create({ name, email, password })
 
+ sendEmail(
+  newUser.email,
+  "Welcome to Bank Transaction System",
+  "Your account has been successfully created 🎉"
+);
+
     const token = jwt.sign(
       { id: newUser._id },
       process.env.JWT_SECRET,
@@ -37,6 +44,7 @@ const RegisterController = async (req, res) => {
       secure: false,
       maxAge: 3 * 24 * 60 * 60 * 1000
     })
+    
     
 
     return res.status(201).json({
@@ -62,6 +70,8 @@ const RegisterController = async (req, res) => {
 
 
 }
+
+
 
 const loginController = async function(req,res){
 const {email, password} = req.body;
