@@ -26,11 +26,12 @@ const RegisterController = async (req, res) => {
 
     const newUser = await userModel.create({ name, email, password })
 
- sendEmail(
+ await sendEmail(
   newUser.email,
   "Welcome to Bank Transaction System",
   "Your account has been successfully created 🎉"
 );
+console.log("👉 About to send email to:", newUser.email);
 
     const token = jwt.sign(
       { id: newUser._id },

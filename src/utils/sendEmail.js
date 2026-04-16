@@ -1,7 +1,8 @@
 const nodemailer = require("nodemailer");
-
 const sendEmail = async (to, subject, text) => {
   try {
+    console.log("👉 sendEmail function called");
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -10,16 +11,16 @@ const sendEmail = async (to, subject, text) => {
       },
     });
 
-    await transporter.sendMail({
+    const info = await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to,
       subject,
       text,
     });
 
-    console.log("Email sent successfully");
+    console.log("Email sent successfully:", info.messageId);
   } catch (error) {
-    console.log("Email error:", error.message);
+    console.log("EMAIL ERROR FULL:", error);
   }
 };
 
