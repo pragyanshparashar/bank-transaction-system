@@ -1,4 +1,4 @@
- const accountModel = require("../models/accountModel");
+
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
@@ -7,7 +7,7 @@ async function authMiddleware (req,res, next){
     if(!token){
         return res.status(401).json({message: "Unauthorized access, token is missing"})
     }try{
-        const decoded = jwt.verify(token, process.envJWT_SECRET)
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
         const user = await userModel.findById(decoded.id)
         req.user = user

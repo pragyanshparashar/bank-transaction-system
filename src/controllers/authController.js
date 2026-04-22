@@ -27,7 +27,7 @@ const RegisterController = async (req, res) => {
 
     const newUser = await userModel.create({ name, email, password })
 
-    const newAccount = await accountModel.create({ userId: newUser._id })
+   
 
  await sendEmail(
   newUser.email,
